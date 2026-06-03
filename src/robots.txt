@@ -1,0 +1,5 @@
+# https://powerpointos.com/robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://powerpointos.com/sitemap.xml

@@ -8,7 +8,12 @@ import { cpSync, rmSync, mkdirSync } from 'node:fs';
 
 const SRC = 'src';
 const OUT = 'public';
-const ASSETS = ['index.html', 'css', 'js', 'favicon.svg', 'og.svg'];
+const ASSETS = [
+  'index.html', 'css', 'js',
+  'favicon.svg', 'og.svg', 'og.png',
+  'apple-touch-icon.png', 'icon-192.png', 'icon-512.png',
+  'robots.txt', 'sitemap.xml', 'site.webmanifest',
+];
 
 mkdirSync(OUT, { recursive: true });
 
