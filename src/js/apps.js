@@ -13,7 +13,7 @@ window.PPOS_APPS = (function () {
     w: 560, h: 400,
     build(body, api) {
       body.innerHTML = `<div class="term" id="termRoot">
-        <div class="ln"><span class="ok">PowerPointOS</span> Terminal · v2025.∞ · every command succeeds</div>
+        <div class="ln"><span class="ok">PowerPointOS</span> Terminal · v2026.∞ · every command succeeds</div>
         <div class="ln hint">Try: rm -rf /, deploy --no-tests, npm install, git push --force, fix bug, make it-work</div>
         <div class="ln">&nbsp;</div>
       </div>`;
