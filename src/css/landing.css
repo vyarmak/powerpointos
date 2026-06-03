@@ -94,7 +94,47 @@ body[data-theme="b"] .btn-primary, body[data-theme="c"] .btn-primary { text-tran
 .theme-switch button.active { background: var(--grad); color: #0a0c12; font-weight: 700; }
 .theme-switch button:not(.active):hover { color: var(--text); }
 
-@media (max-width: 860px) { .nav-links a:not(.nav-cta) { display: none; } }
+/* mobile nav controls (compact Boot + hamburger) — hidden on desktop */
+.nav-mobile { display: none; align-items: center; gap: 10px; }
+.nav-cta-m { padding: 10px 14px; font-size: 13px; }
+.nav-toggle {
+  width: 42px; height: 42px; flex: none; padding: 0;
+  display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  background: var(--panel-bg); border: var(--panel-border); border-radius: 11px; cursor: pointer;
+}
+.nav-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--text); transition: transform .25s, opacity .2s; }
+.nav.open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav.open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav.open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 860px) {
+  .nav { padding: 13px 16px; }
+  .nav-mobile { display: flex; }
+
+  /* the desktop link row becomes a dropdown panel under the bar */
+  .nav-links {
+    position: absolute; top: 100%; left: 0; right: 0;
+    display: none; flex-direction: column; align-items: stretch; gap: 2px;
+    padding: 10px 16px 16px;
+    background: color-mix(in srgb, var(--bg) 94%, transparent);
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    border-bottom: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    box-shadow: 0 18px 40px -20px rgba(0,0,0,.6);
+  }
+  .nav.open .nav-links { display: flex; }
+  .nav-links a:not(.nav-cta) { display: block; padding: 13px 8px; font-size: 16px; border-radius: 10px; color: var(--text-dim); }
+  .nav-links a:not(.nav-cta):active { background: var(--panel-bg); color: var(--text); }
+  .nav-links .nav-cta { display: none; }
+
+  /* theme switcher: full-width row with larger tap targets */
+  .theme-switch { width: 100%; justify-content: center; gap: 8px; margin-top: 8px; padding: 6px; }
+  .theme-switch button { flex: 1; padding: 14px 12px; font-size: 12px; }
+}
+
+@media (max-width: 380px) {
+  .brand .name { font-size: 17px; }
+  .nav { padding: 12px 13px; }
+}
 
 /* ============================================================
    Hero

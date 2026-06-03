@@ -16,6 +16,26 @@
   $$('[data-theme-btn]').forEach(b => b.addEventListener('click', () => setTheme(b.dataset.themeBtn)));
   try { const saved = localStorage.getItem('ppos-theme'); if (saved) setTheme(saved); } catch (e) {}
 
+  /* ---------- Mobile nav (hamburger) ---------- */
+  (function navToggle() {
+    const nav = $('.nav'), toggle = $('#navToggle');
+    if (!nav || !toggle) return;
+    const setOpen = (open) => {
+      nav.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    toggle.addEventListener('click', (e) => { e.stopPropagation(); setOpen(!nav.classList.contains('open')); });
+    // clicks inside the bar/panel close the menu — except the toggle itself and theme buttons
+    nav.addEventListener('click', (e) => {
+      if (e.target.closest('#navToggle') || e.target.closest('[data-theme-btn]')) return;
+      setOpen(false);
+    });
+    document.addEventListener('click', (e) => { if (nav.classList.contains('open') && !nav.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 860) setOpen(false); });
+  })();
+
   /* ---------- Rotating taglines ---------- */
   (function rotator() {
     const host = $('#rotator');
