@@ -1,0 +1,57 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## What this is
+
+PowerPointOS.com — a satirical marketing site for a fictional OS "built on PowerPoint" (where everything always works), plus an interactive fullscreen bootable mini-desktop demo launched from the "Boot PowerPointOS" CTA. The comedy *is* the product: deadpan enterprise-SaaS parody that never breaks character. **All user-facing copy must be preserved verbatim — do not paraphrase; specificity is the joke.** See `README.md` for the full design spec (screens, tokens, interactions) — it is the source of truth for look and behavior.
+
+It is parody of a Microsoft trademark: keep it clearly satirical, use only the original "PowerPointOS" wordmark (`src/favicon.svg`), never Microsoft's real logo/marks, and keep the footer parody disclaimer.
+
+## Stack & how to run
+
+Vanilla HTML/CSS/JS. **No framework, no bundler, no transpile, no runtime dependencies, no tests, no lint.** The only "build" is a file copy (see below). Do not introduce a framework/bundler/deps without being asked.
+
+- **Run / develop:** `npm run dev` (or `npm start`) starts a zero-dependency Node static server (`scripts/serve.mjs`) for `src/` at `http://localhost:8080`; override with `PORT=3000 npm run dev`. You can also just open `src/index.html` directly in a browser. Changes are live on reload — there is nothing to compile.
+- **Build:** `npm run build` (`scripts/build.mjs`) assembles `public/` from `src/` — copies `index.html`, `css/`, `js/`, `favicon.svg`, `og.svg` into `public/` as-is. It refreshes only those assets and preserves anything else in `public/` (e.g. `.well-known/`). No bundling/minification happens.
+- There is no test suite. Verify changes by interacting with the page in a browser (boot the OS, switch themes, exercise the affected app). Always check `prefers-reduced-motion` behavior — every animation has a reduced-motion path.
+
+## Architecture
+
+Source lives in `src/`. The four JS files are plain `<script>` tags loaded in a **strict order** (`src/index.html` lines ~264–267) because they communicate through `window` globals, not modules:
+
+```
+data.js     → window.PPOS         (ALL copy/content: taglines, features, quotes,
+                                    pricing, terminal responses, templates, build steps)
+landing.js  → window.fireConfetti, window.PPOS_reduce   (also: theme switch, counters,
+                                    rotator, parallax, reveal-on-scroll, day-in-life demos)
+apps.js     → window.PPOS_APPS     (the 7 OS apps; each is
+                                    {id,title,icon,w,h, build(body, api)})
+desktop.js  → window.PPOS_toast    (consumes the above: boot, window manager, dock,
+                                    dialogs, Blue Slide of Success)
+```
+
+If you add a file or reorder these scripts, you will break the global dependency chain. `data.js` must load first; `desktop.js` last.
+
+- **App API:** each app's `build(body, api)` receives `api = { confetti, dialog, bsos, reduce, wait }`. To add/modify an OS app, edit `apps.js`; register it in the apps list (which drives both desktop icons and the dock in `desktop.js`).
+- **Content is data-driven:** treat `src/js/data.js` as the content source of truth. Copy changes go there, not inline (except hero/section heads/footer/boot lines, which are inline in the HTML).
+
+### Theming (CSS custom properties)
+
+Three complete themes (`a` = Glass / `b` = Cyber / `c` = Retro) are driven entirely by CSS variables scoped to `body[data-theme="a|b|c"]` in `src/css/themes.css`. Switching themes only flips the `data-theme` attribute (persisted to `localStorage('ppos-theme')`); no per-element rewrites. Full token tables are in `README.md` → Design Tokens. CSS is split: `themes.css` (tokens + ambient decorative layers), `landing.css`, `desktop.css`.
+
+### Non-obvious invariants (will break things if violated)
+
+- **Dialog scrim pointer-events trap:** `.dlg-scrim` sits at `z-index: 80`, above windows. When not shown it MUST keep `pointer-events: none` (only `.show` restores `auto`), or the invisible scrim swallows every window click/drag.
+- **Animate transform, not opacity:** windows, boot lines, and entrances rest at `opacity: 1` and animate transform only, so frozen frames / exports / reduced-motion still render. Do not gate visibility on an animation that starts at `opacity: 0`.
+- **Escape user input:** Terminal HTML-escapes commands before echoing (`escapeHtml` in `apps.js`).
+
+## Deployment (Firebase Hosting)
+
+`firebase.json` serves the **`public/`** directory (project `powerpointos`, SPA rewrite `** → /index.html`). CI: `.github/workflows/firebase-hosting-merge.yml` runs `npm ci && npm run build` then deploys to the live channel on push to `main`; `firebase-hosting-pull-request.yml` posts a preview on PRs the same way. `package-lock.json` (zero deps) must stay committed and in sync for `npm ci`.
+
+`public/` is generated by `npm run build` — treat it as a build artifact, not the place to edit the site. Edit `src/` and rebuild.
+
+## Other
+
+- `.agents/skills/` + `skills-lock.json` are vendored Firebase agent skills (from `firebase/agent-skills`), not project code.

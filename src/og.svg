@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0E1320"></stop><stop offset="1" stop-color="#0B0D12"></stop>
+    </linearGradient>
+    <linearGradient id="acc" x1="500" y1="200" x2="700" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#5BA8FF"></stop><stop offset=".5" stop-color="#9B7BFF"></stop><stop offset="1" stop-color="#4FE3D0"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"></rect>
+  <circle cx="980" cy="120" r="320" fill="#9B7BFF" opacity="0.12"></circle>
+  <circle cx="180" cy="560" r="300" fill="#5BA8FF" opacity="0.10"></circle>
+  <g transform="translate(96,150)">
+    <rect x="0" y="0" width="92" height="70" rx="15" fill="url(#acc)"></rect>
+    <path d="M24 37 l13 13 l30 -34" fill="none" stroke="#0a0c12" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
+  <text x="210" y="208" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="56" font-weight="800" fill="#EAF0FA">PowerPointOS</text>
+  <text x="96" y="360" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="78" font-weight="300" fill="#EAF0FA">The only OS where</text>
+  <text x="96" y="448" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif" font-size="78" font-weight="300" fill="url(#acc)">everything works.</text>
+  <g font-family="ui-monospace, monospace" font-size="24" fill="#aab4c8">
+    <text x="96" y="548">✓ 0 bugs shipped. Ever.</text>
+    <text x="470" y="548">✓ 100% of deadlines met.</text>
+    <text x="880" y="548">✓ ∞% uptime.</text>
+  </g>
+</svg>

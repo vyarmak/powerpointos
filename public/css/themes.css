@@ -1,0 +1,222 @@
+/* ============================================================
+   PowerPointOS — Theme System
+   Three aesthetics share identical structure; only tokens swap.
+   A = Glass/Spatial · B = Cyberpunk Holographic · C = Retro-Futurism
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Orbitron:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: var(--body-weight, 400);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  transition: background-color .5s ease, color .5s ease;
+}
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ---- Shared scalar tokens ---- */
+:root {
+  --maxw: 1200px;
+  --ease-spring: cubic-bezier(.2,.9,.25,1.2);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+/* ============================================================
+   THEME A — GLASSMORPHISM / SPATIAL
+   ============================================================ */
+body[data-theme="a"] {
+  --bg: #0B0D12;
+  --bg-2: #11141c;
+  --bg-grad: radial-gradient(120% 90% at 20% -10%, #1a2336 0%, #0B0D12 55%),
+             radial-gradient(100% 80% at 90% 0%, #1d1633 0%, rgba(11,13,18,0) 60%);
+  --panel-bg: rgba(255,255,255,.07);
+  --panel-bg-strong: rgba(255,255,255,.11);
+  --panel-blur: 26px;
+  --panel-border: 1px solid rgba(255,255,255,.14);
+  --panel-hi: inset 0 1px 0 rgba(255,255,255,.22);
+  --text: #EAF0FA;
+  --text-dim: #aab4c8;
+  --text-faint: #6b768c;
+  --accent: #5BA8FF;
+  --accent-2: #9B7BFF;
+  --accent-3: #4FE3D0;
+  --grad: linear-gradient(110deg, #5BA8FF 0%, #9B7BFF 50%, #4FE3D0 100%);
+  --grad-soft: linear-gradient(110deg, rgba(91,168,255,.18), rgba(155,123,255,.16), rgba(79,227,208,.16));
+  --success: #5dffa0;
+  --glow: 0 8px 40px rgba(91,168,255,.18);
+  --shadow: 0 30px 80px -30px rgba(0,0,0,.7);
+  --radius: 16px;
+  --radius-lg: 26px;
+  --btn-radius: 12px;
+  --window-radius: 18px;
+  --font-display: -apple-system, BlinkMacSystemFont, 'Space Grotesk', system-ui, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 300;
+  --display-spacing: -0.02em;
+  --display-transform: none;
+  --label-spacing: 0.28em;
+  --label-transform: uppercase;
+  --body-weight: 400;
+}
+
+/* ============================================================
+   THEME B — CYBERPUNK HOLOGRAPHIC
+   ============================================================ */
+body[data-theme="b"] {
+  --bg: #05060A;
+  --bg-2: #090b13;
+  --bg-grad: radial-gradient(120% 80% at 50% 120%, rgba(255,46,151,.12) 0%, rgba(5,6,10,0) 55%),
+             radial-gradient(90% 70% at 80% -10%, rgba(0,240,255,.12) 0%, rgba(5,6,10,0) 60%);
+  --panel-bg: rgba(10,14,26,.55);
+  --panel-bg-strong: rgba(13,18,32,.78);
+  --panel-blur: 10px;
+  --panel-border: 1px solid rgba(0,240,255,.28);
+  --panel-hi: inset 0 0 0 1px rgba(255,46,151,.06);
+  --text: #E9FBFF;
+  --text-dim: #7fa7b8;
+  --text-faint: #4a6b78;
+  --accent: #00F0FF;
+  --accent-2: #FF2E97;
+  --accent-3: #7CFF5B;
+  --grad: linear-gradient(110deg, #FF2E97 0%, #b04bff 40%, #00F0FF 100%);
+  --grad-soft: linear-gradient(110deg, rgba(255,46,151,.16), rgba(0,240,255,.16));
+  --success: #7CFF5B;
+  --glow: 0 0 30px rgba(0,240,255,.35), 0 0 60px rgba(255,46,151,.15);
+  --shadow: 0 20px 60px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(0,240,255,.06);
+  --radius: 6px;
+  --radius-lg: 8px;
+  --btn-radius: 4px;
+  --window-radius: 6px;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --display-weight: 700;
+  --display-spacing: -0.01em;
+  --display-transform: uppercase;
+  --label-spacing: 0.35em;
+  --label-transform: uppercase;
+  --body-weight: 400;
+}
+
+/* ============================================================
+   THEME C — RETRO-FUTURISM (1995 imagines 2025)
+   ============================================================ */
+body[data-theme="c"] {
+  --bg: #140a1e;
+  --bg-2: #1c0f2b;
+  --bg-grad: linear-gradient(180deg, #2a1140 0%, #140a1e 45%),
+             radial-gradient(80% 50% at 50% 100%, rgba(255,138,61,.18) 0%, rgba(20,10,30,0) 70%);
+  --panel-bg: rgba(33,16,48,.62);
+  --panel-bg-strong: rgba(40,20,58,.85);
+  --panel-blur: 8px;
+  --panel-border: 1px solid rgba(255,138,61,.35);
+  --panel-hi: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(0,0,0,.3);
+  --text: #FFF3E8;
+  --text-dim: #d3a9c8;
+  --text-faint: #8a6a86;
+  --accent: #FF8A3D;
+  --accent-2: #FF3DAE;
+  --accent-3: #19C7C7;
+  --grad: linear-gradient(110deg, #FF3DAE 0%, #FF8A3D 50%, #19C7C7 100%);
+  --grad-soft: linear-gradient(110deg, rgba(255,61,174,.2), rgba(255,138,61,.2), rgba(25,199,199,.18));
+  --success: #5dffb0;
+  --glow: 0 6px 30px rgba(255,138,61,.3);
+  --shadow: 0 24px 60px -24px rgba(0,0,0,.8);
+  --radius: 10px;
+  --radius-lg: 14px;
+  --btn-radius: 8px;
+  --window-radius: 10px;
+  --font-display: 'Orbitron', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --display-weight: 800;
+  --display-spacing: 0.01em;
+  --display-transform: uppercase;
+  --label-spacing: 0.3em;
+  --label-transform: uppercase;
+  --body-weight: 400;
+}
+
+/* ============================================================
+   Ambient decorative layers (full-page, behind content)
+   Toggled by theme via opacity.
+   ============================================================ */
+#ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg-grad);
+  transition: background .6s ease;
+}
+#ambient::before,
+#ambient::after { content: ""; position: absolute; inset: 0; transition: opacity .6s ease; }
+
+/* film grain (A) */
+#ambient::before {
+  opacity: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+body[data-theme="a"] #ambient::before { opacity: .35; }
+
+/* scanlines (B + C) */
+#ambient::after {
+  opacity: 0;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+body[data-theme="b"] #ambient::after { opacity: .5; }
+body[data-theme="c"] #ambient::after { opacity: .35; }
+
+/* synthwave grid horizon (B) + chrome grid (C) */
+#grid-horizon {
+  position: fixed;
+  left: 50%; bottom: -10vh; transform: translateX(-50%);
+  width: 200vw; height: 70vh;
+  z-index: 0; pointer-events: none; opacity: 0;
+  background-image:
+    linear-gradient(transparent 0, transparent calc(100% - 1px), var(--accent) 100%),
+    repeating-linear-gradient(90deg, transparent 0 7%, var(--accent) 7%, transparent 7.4%),
+    repeating-linear-gradient(0deg, transparent 0 9%, var(--accent) 9%, transparent 9.5%);
+  -webkit-mask-image: linear-gradient(transparent, #000 80%);
+          mask-image: linear-gradient(transparent, #000 80%);
+  transform: translateX(-50%) perspective(40vh) rotateX(70deg);
+  transform-origin: bottom;
+  transition: opacity .6s ease;
+}
+body[data-theme="b"] #grid-horizon { opacity: .22; }
+body[data-theme="c"] #grid-horizon { opacity: .3; }
+
+/* starfield (C) */
+#starfield {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 20% 30%, #fff 50%, transparent),
+    radial-gradient(1.5px 1.5px at 70% 20%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 40% 60%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 85% 70%, #fff 50%, transparent),
+    radial-gradient(1.5px 1.5px at 55% 85%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 10% 80%, #fff 50%, transparent),
+    radial-gradient(1px 1px at 92% 40%, #fff 50%, transparent);
+  transition: opacity .6s ease;
+}
+body[data-theme="c"] #starfield { opacity: .5; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .15s !important; }
+}
